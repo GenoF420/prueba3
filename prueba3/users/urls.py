@@ -8,9 +8,3 @@ urlpatterns = [
     path("/gender", views.gender, name="genders"),
     path("/gender/<str:id>", views.gender_specific, name="gender"),
 ]
-
-
-# /user
-# /user/<str:id>
-# /gender
-# /gender/<str:id>
