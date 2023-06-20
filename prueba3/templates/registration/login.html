@@ -13,17 +13,18 @@
             <div class="card-header text-center">Iniciar Sesion</div>
             <div class="card-body p-4">
 
-              <form id="login_form">
+              <form id="login_form" method="POST">
+                {% csrf_token %}
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="email" id="email_input" name="email_input" class="form-control" required/>
-                  <label class="form-label" for="email_input">Correo Electronico</label>
+                  <input type="text" id="id_username" name="username" class="form-control" required/>
+                  <label class="form-label" for="id_username">Nombre de Usuario</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" id="password_input" name="password_input" class="form-control" required/>
-                  <label class="form-label" for="password_input">Contraseña</label>
+                  <input type="password" id="id_password" name="password" class="form-control" required/>
+                  <label class="form-label" for="id_password">Contraseña</label>
                 </div>
 
                 <!-- 2 column grid layout for inline styling -->

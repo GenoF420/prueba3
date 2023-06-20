@@ -6,7 +6,7 @@ def home(request):
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, '../prueba3/registration/../templates/login.html')
 
 
 def about(request):
@@ -14,8 +14,8 @@ def about(request):
 
 
 def register(request):
-    return render(request, 'register.html')
+    return render(request, '../prueba3/registration/../templates/register.html')
 
 
 def forgot_password(request):
-    return render(request, 'forgot_password.html')
+    return render(request, 'registration/forgot_password.html')
