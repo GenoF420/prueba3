@@ -68,6 +68,14 @@ def user(request, username):
 
 
 @login_required
+def user_delete(request, username):
+    _user = User.objects.get(username=username)
+    if request.method == 'GET':
+        _user.delete()
+    return redirect('intranet_users')
+
+
+@login_required
 def services(request):
     ctx = {
         'page': {
@@ -118,6 +126,15 @@ def service(request, identifier):
     return JsonResponse(ctx)
 
 
+@login_required
+def service_delete(request, identifier):
+    _service = Service.objects.get(id=identifier)
+    if request.method == 'GET':
+        _service.delete()
+    return redirect('intranet_services')
+
+
+@login_required
 def service_new(request):
     if request.method == 'GET':
         form = ServiceForm()
@@ -136,6 +153,7 @@ def service_new(request):
             return redirect('intranet_services')
         else:
             return redirect('intranet_service_new')
+
 
 # Bookings
 

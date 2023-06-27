@@ -57,8 +57,8 @@
                                                 Editar
                                             </a>
                                             |
-                                            <a href="#" onclick="sendUserDeleteRequest('{{ user.rut }}')" class="text-danger font-weight-bold text-xs"
-                                               data-toggle="tooltip" data-original-title="Edit user">
+                                            <a href="{% url 'intranet_user_delete' username=user.username %}" class="text-danger font-weight-bold text-xs"
+                                               data-toggle="tooltip" data-original-title="Eliminar user">
                                                 Eliminar
                                             </a>
                                         </td>
