@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from intranet.forms import NewServiceForm
+from intranet.forms import ServiceForm, UserForm
 from intranet.models import User, Booking, Service
 
 
@@ -45,11 +45,17 @@ def user(request, username):
                 'id': 'user',
                 'name': 'Usuario'
             },
-            'user': _user
+            'user': _user,
+            'form': UserForm(instance=_user)
         }
 
         return render(request, 'intranet/user.html', ctx)
-
+    elif request.method == 'POST':
+        form = UserForm(request.POST, instance=_user)
+        if form.is_valid():
+            form.save()
+            return redirect('intranet_users')
+        ctx = {'success': False, 'error': form.errors}
     elif request.method == 'DELETE':
         _user.delete()
         ctx = {'success': True}
@@ -88,10 +94,18 @@ def service(request, identifier):
                 'id': 'user',
                 'name': 'Usuario'
             },
+            'form': ServiceForm(instance=_service),
             'service': _service
         }
 
         return render(request, 'intranet/service.html', ctx)
+
+    elif request.method == 'POST':
+        form = ServiceForm(request.POST, instance=_service)
+        if form.is_valid():
+            form.save()
+            return redirect('intranet_services')
+        ctx = {'success': False, 'error': form.errors}
 
     elif request.method == 'DELETE':
         _service.delete()
@@ -106,7 +120,7 @@ def service(request, identifier):
 
 def service_new(request):
     if request.method == 'GET':
-        form = NewServiceForm()
+        form = ServiceForm()
         ctx = {
             'page': {
                 'id': 'service_new',
@@ -116,7 +130,7 @@ def service_new(request):
         }
         return render(request, 'intranet/service_new.html', ctx)
     if request.method == 'POST':
-        form = NewServiceForm(request.POST)
+        form = ServiceForm(request.POST)
         if form.is_valid():
             _service = form.save()
             return redirect('intranet_services')
