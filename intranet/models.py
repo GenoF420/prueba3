@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.functions import datetime
 
-#Necesito hacer reservas.
 
 class User(AbstractUser):
     rut = models.CharField(max_length=9, default=12345678)
@@ -23,15 +22,9 @@ class Service(models.Model):
 class Booking(models.Model):
     id = models.AutoField(db_column='bookingID', primary_key=True)
     patente = models.CharField(max_length=8)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    commentary = models.CharField(max_length=128)
 
     class Meta:
         db_table = 'booking'
-
-
-class CarBookingServices(models.Model):
-    patente = models.ForeignKey(Booking, on_delete=models.CASCADE)
-    servicio = models.ForeignKey(Service, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'car_service'

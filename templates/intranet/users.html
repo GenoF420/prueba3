@@ -56,12 +56,12 @@
                                             <span class="text-secondary text-xs font-weight-bold">{{ user.last_login }}</span>
                                         </td>
                                         <td class="align-middle">
-                                            <a href="{% url 'intranet_users' %}/{{ user.username }}" class="text-secondary font-weight-bold text-xs"
+                                            <a href="{% url 'intranet_user' username=user.username %}" class="text-secondary font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Editar
                                             </a>
                                             |
-                                            <a href="#" onclick="sendUserDeleteRequest('{{ user.rut }}')" class="text-secondary font-weight-bold text-xs"
+                                            <a href="#" onclick="sendUserDeleteRequest('{{ user.rut }}')" class="text-danger font-weight-bold text-xs"
                                                data-toggle="tooltip" data-original-title="Edit user">
                                                 Eliminar
                                             </a>
