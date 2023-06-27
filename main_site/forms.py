@@ -4,14 +4,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class BookingForm(forms.ModelForm):
+    #patente = forms.CharField(max_length=8, label='Patente')
+    service = forms.ModelChoiceField(queryset=Service.objects.all(), empty_label='Seleccione un servicio', label='Servicio')
+
     class Meta:
         model = Booking
-        fields = ['patente']
+        fields = ['patente', 'service']
+    
 
-    services = forms.ModelMultipleChoiceField(
-        queryset=Service.objects.all(),
-        widget=forms.CheckboxSelectMultiple
-        )
+
 
 class RegisterForm(UserCreationForm):
     class Meta:

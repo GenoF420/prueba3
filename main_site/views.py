@@ -1,21 +1,31 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login
-#from intranet.models import Booking
-
+from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, BookingForm
 
+
+@login_required
 def create_booking(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
-            booking.user = request.user
-            booking = form.save()
-            messages.success(request, 'Has reservado correctamente :)')
-            return redirect('bookings')
+            form.save()
+            messages.success(request, 'yey :)')
+            return redirect('home')
+        else:
+            messages.error(request, '¡Hubo un error en el formulario!')
     else:
         form = BookingForm()
-    return render(request, 'intranet/intranet_bookings.html', {'form': form})
+        render_form=form.render()
+        ctx = {
+            'page':{
+                'id': 'booking',
+                'name': 'Reserva'
+            },
+            'form':render_form
+        }
+        return render(request, 'main_site/booking.html', ctx)
 
 
 
