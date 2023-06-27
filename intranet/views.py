@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from intranet.forms import NewServiceForm
 from intranet.models import User, Booking, Service
 
 
@@ -102,6 +103,25 @@ def service(request, identifier):
 
     return JsonResponse(ctx)
 
+
+def service_new(request):
+    if request.method == 'GET':
+        form = NewServiceForm()
+        ctx = {
+            'page': {
+                'id': 'service_new',
+                'name': 'Anadir Servicio'
+            },
+            'form': form.render()
+        }
+        return render(request, 'intranet/service_new.html', ctx)
+    if request.method == 'POST':
+        form = NewServiceForm(request.POST)
+        if form.is_valid():
+            _service = form.save()
+            return redirect('intranet_services')
+        else:
+            return redirect('intranet_service_new')
 
 # Bookings
 
