@@ -53,7 +53,7 @@
                                                     Editar
                                                 </a>
                                                 |
-                                                <a href="#" onclick="sendBookingDeleteRequest('{{ booking.patente.id }}')" class="text-secondary font-weight-bold text-xs"
+                                                <a href="{% url 'intranet_service_delete' identifier=service.id %}" class="text-secondary font-weight-bold text-xs"
                                                    data-toggle="tooltip" data-original-title="Remove servicio">
                                                     Eliminar
                                                 </a>
