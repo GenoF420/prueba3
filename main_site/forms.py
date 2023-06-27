@@ -1,20 +1,17 @@
 from django import forms
-from intranet.models import User
+from intranet.models import User, Service, Booking
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['patente']
 
-class LoginForm(AuthenticationForm):
-    username= forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Ingrese su nombre',
-    }))
-
-    password= forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Ingrese su clave',
-    }))
-
-    
-
+    services = forms.ModelMultipleChoiceField(
+        queryset=Service.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+        )
 
 class RegisterForm(UserCreationForm):
     class Meta:

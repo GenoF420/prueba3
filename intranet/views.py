@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+
 from intranet.models import User, CarBookingServices, Booking
 
 
@@ -66,3 +67,5 @@ def booking(request, identifier):
     }
 
     return render(request, 'intranet/booking.html', ctx)
+
+

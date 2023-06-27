@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.functions import datetime
 
+#Necesito hacer reservas.
 
 class User(AbstractUser):
     rut = models.CharField(max_length=9, default=12345678)
