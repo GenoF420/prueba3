@@ -15,6 +15,9 @@ class Service(models.Model):
     name = models.CharField(max_length=64)
     price = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+    
     class Meta:
         db_table = 'service'
 
