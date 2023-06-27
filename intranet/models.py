@@ -7,8 +7,6 @@ from django.db.models.functions import datetime
 class User(AbstractUser):
     rut = models.CharField(max_length=9, default=12345678)
     birthday = models.DateField("Date", default=datetime.datetime.now())
-    verified = models.BooleanField(default=False)
-    verified_until = models.DateTimeField(null=True)
     GENDER_CHOICES = (('H', 'Hombre'), ('M', 'Mujer'), ('O', 'Otro'))
     gender = models.CharField(max_length=1, default='H', choices=GENDER_CHOICES)
 
