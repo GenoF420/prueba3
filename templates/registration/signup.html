@@ -38,29 +38,46 @@
                     <div class="card z-index-0 fadeIn3 fadeInBottom">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Iniciar Sesion</h4>
+                                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Registro</h4>
                             </div>
                         </div>
                         <div class="card-body">
                             <form method="POST">
-								{% csrf_token %}
-								<h2>Sign Up</h2>
-									
-								{% for field in form %}
-								<p>
-									{% if field.errors %}
-									<ul class="errorlist">
-										{% for error in field.errors %}
-										<li>{{ error }}</li>
-										{% endfor %}
-									</ul>
-									{% endif %}
-									 {{ field.label_tag }} {{ field }}
-								</p>
-								{% endfor %}
-								<input type="submit" value="Register" />
-							</form>
-							
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    {% if field.widget_type == 'text' or field.widget_type == 'password' or field.widget_type == 'number' or field.widget_type == 'email' %}
+                                        <div class="input-group input-group-outline mb-3">
+                                            <label for="{{ field.id_for_label }}"
+                                                   class="form-label">{{ field.label_tag }}</label>
+                                            <input id="{{ field.id_for_label }}" name="{{ field.html_name }}"
+                                                   type="{{ field.widget_type }}"
+                                                   class="form-control">
+                                            {% if field.errors %}
+                                                <ul class="errorlist">
+                                                    {% for error in field.errors %}
+                                                        <li>{{ error }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <div class="input-group input-group-outline mb-3">
+                                            {{ field }}
+                                            {% if field.errors %}
+                                                <ul class="errorlist">
+                                                    {% for error in field.errors %}
+                                                        <li>{{ error }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+
+                                    {% endif %}
+                                {% endfor %}
+                                <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Registrarte
+                                </button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

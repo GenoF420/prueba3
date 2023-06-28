@@ -13,23 +13,21 @@ def create_booking(request):
             booking = form.save(commit=False)
             booking.user = request.user
             booking.save()
-            #form.save_m2m() 
+            # form.save_m2m()
             messages.success(request, 'yey :)')
             return redirect('home')
         else:
             messages.error(request, '¡Hubo un error en el formulario!')
     else:
         form = BookingForm()
-        render_form=form.render()
         ctx = {
-            'page':{
+            'page': {
                 'id': 'booking',
                 'name': 'Reserva'
             },
-            'form':render_form
+            'form': form
         }
         return render(request, 'main_site/booking.html', ctx)
-
 
 
 def home(request):
@@ -55,12 +53,12 @@ def about(request):
 def sign_up(request):
     if request.method == 'GET':
         form = RegisterForm()
-        return render(request, 'registration/signup.html', { 'form': form})  
-    
+        return render(request, 'registration/signup.html', {'form': form})
+
     if request.method == 'POST':
-        form = RegisterForm(request.POST) 
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            user=form.save()
+            user = form.save()
             messages.success(request, 'You have singed up successfully.')
             login(request, user)
             return redirect('login')

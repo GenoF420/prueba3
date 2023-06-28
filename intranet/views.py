@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from intranet.forms import ServiceForm, UserForm
+from intranet.forms import ServiceForm, UserForm, BookingAdminForm
 from intranet.models import User, Booking, Service
 
 
@@ -184,11 +184,17 @@ def booking(request, identifier):
                 'id': 'user',
                 'name': 'Usuario'
             },
-            'booking': _booking
+            'user': _booking,
+            'form': BookingAdminForm(instance=_booking)
         }
 
         return render(request, 'intranet/booking.html', ctx)
-
+    elif request.method == 'POST':
+        form = BookingAdminForm(request.POST, instance=_booking)
+        if form.is_valid():
+            form.save()
+            return redirect('intranet_bookings')
+        ctx = {'success': False, 'error': form.errors}
     elif request.method == 'DELETE':
         _booking.delete()
         ctx = {'success': True}
@@ -198,3 +204,11 @@ def booking(request, identifier):
         ctx = {'success': False, 'error': 'Method Not Supported'}
 
     return JsonResponse(ctx)
+
+
+@login_required
+def booking_delete(request, identifier):
+    _booking = Booking.objects.get(id=identifier)
+    if request.method == 'GET':
+        _booking.delete()
+    return redirect('intranet_bookings')
